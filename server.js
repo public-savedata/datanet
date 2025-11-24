@@ -9,7 +9,7 @@ const html = `
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>صفحه با کادر آبی</title>
+  <title>Data Net</title>
   <style>
     body {
       margin: 0;
