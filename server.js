@@ -1,85 +1,94 @@
-// server.js
-const http = require('http');
+import { createServer } from 'http';
+import { readFile } from 'fs';
+import { dirname, join  } from 'path';
 
-const PORT = process.env.PORT || 3000;
+import { fileURLToPath } from 'url';
+import axios from 'axios';
 
-const html = `
-<!doctype html>
-<html lang="fa">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Data Net</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: sans-serif;
-      background: #f7f8fa;
-      color: #1f2430;
-    }
-    header {
-      background: #1677ff;
-      color: white;
-      padding: 20px;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 24px;
-    }
-    main {
-      padding: 20px;
-    }
-    .card {
-      background: white;
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 6px 24px rgba(31,36,48,0.06);
-    }
-    .btn {
-      display: inline-block;
-      background: #1677ff;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      padding: 10px 14px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    .btn:hover {
-      background: #0d5bd3;
-    }
-    footer {
-      text-align: center;
-      color: #6b7280;
-      padding: 24px 16px 40px;
-    }
-  </style>
-</head>
-<body>
-<header>
-  <h1>DataNet</h1>
-  <p>Under Construction</p>
-</header>
-<main>
-  <div class="card">
-    <h2>Thank You for Visiting</h2>
-    <p>Please check back later.</p>
-    <button class="btn">Sample Button</button>
-  </div>
-</main>
-<footer>
-  <small>© 2026</small>
-</footer>
-</body>
-</html>
-`;
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-const server = http.createServer((req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-  res.end(html);
+ 
+
+
+
+
+// توکن و chat_id ربات تلگرام
+// const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN; 
+// const CHAT_ID = process.env.CHAT_ID; 
+
+
+const TELEGRAM_TOKEN =  "8255225111:AAGy6QaLC2bV8gNYOBvMuj2qz1LyaE757As";
+const CHAT_ID = 6683911472; 
+
+async function notifyTelegram(text) {
+   try {
+
+   const res = await axios.post(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
+    chat_id: CHAT_ID,
+    text
+  });
+ console.log("✅ پیام ارسال شد:", res.data);
+  } catch (err) {
+    // هندل خطا
+    if (err.code === 'ECONNABORTED') {
+      console.error("⏱️ درخواست تایم‌اوت شد (احتمالاً فیلتر یا کندی شبکه).");
+    } else if (err.response) {
+      console.error("❌ خطای تلگرام:", err.response.status, err.response.data);
+    } else {
+      console.error("⚠️ خطای شبکه:", err.message);
+    }
+  }
+
+
+}
+
+// استفاده:
+// notifyTelegram("سلام! این پیام با axios فرستاده شد ✅");
+
+
+const htmlPath = join(__dirname, 'index.html');
+
+const server = createServer((req, res) => {
+  if (req.method === 'GET' && req.url === '/') {
+    readFile(htmlPath, (err, data) => {
+      if (err) {
+        res.writeHead(500);
+        res.end('Error loading HTML file');
+      } else {
+        res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+        res.end(data);
+      }
+    });
+  } else if (req.method === 'POST' && req.url === '/send') {
+    let body = '';
+    req.on('data', chunk => { body += chunk.toString(); });
+    req.on('end', async () => {
+      const params = new URLSearchParams(body);
+      const message = params.get('message');
+
+      // ارسال پیام به تلگرام
+      notifyTelegram(message);
+      // const fetch = (await import('node-fetch')).default;
+      // await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({
+      //     chat_id: CHAT_ID,
+      //     text: message
+      //   })
+      // });
+
+      res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
+      res.end('Thanks, your message was sent!');
+    });
+  } else {
+    res.writeHead(404);
+    res.end('Not Found');
+  }
 });
 
+const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
