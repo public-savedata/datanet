@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="fa">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Data Net</title>
+    <link async defer rel="stylesheet" href="./style/index.css">
+</head>
+
+<body>
+    <header>
+        <h1>DataNet</h1>
+
+    </header>
+
+    <chat-layout>
+        <chat-container>
+            <!-- جایی برای نمایش نتیجه -->
+            <message-history>
+                <message-element class="type-sender state-success">
+                    <p>Voluptate sint ex enim esse quis.</p>
+                </message-element>
+                <message-element class="type-sender state-indicator">
+                    <p>Voluptate sint ex enim esse quis.</p>
+                </message-element>
+                <message-element class="type-sender state-error">
+                    <p>Voluptate sint ex enim esse quis.</p>
+                </message-element>
+            </message-history>
+            <div id="result" class="result-view"></div>
+            <footer>
+                <p>Under Construction</p>
+                <small>© 2026</small>
+            </footer>
+        </chat-container>
+        <chat-card>
+            <div class="card">
+                <form id="messageForm">
+                    <canvas-layout>
+                        <label>
+
+                            <textarea name="message" rows="5" cols="40" placeholder="Write Your Message ..."></textarea>
+                        </label>
+                        <button class="btn" type="submit">Send</button>
+                    </canvas-layout>
+                </form>
+
+            </div>
+        </chat-card>
+    </chat-layout>
+
+
+    <script async defer type="module" src="./script/script.js"></script>
+
+</body>
+
+</html>
