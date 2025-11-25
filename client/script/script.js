@@ -22,7 +22,7 @@ form.addEventListener('submit', async (e) => {
         if (text.startsWith("{")) {
             var data = JSON.parse(text);
             if (data.result) {
-                dev.SetState("success");
+                dev.SetState("success", 3000);
                 return;
             }
             dev.SetState("error");
@@ -45,7 +45,11 @@ class MessageElement {
         this.el.classList.add(`state-${state}`);
         if (time > 0)
             setTimeout(() => {
-                this.el.classList.remove(`state-${state}`);
+                this.el.classList.add(`hiding-status`);
+                setTimeout(() => {
+                    this.el.classList.remove(`state-${state}`);
+                    this.el.classList.remove(`hiding-status`);
+                }, 500);
             }, time);
     }
     el;
@@ -67,3 +71,7 @@ class MessageElement {
         this.el.append(p);
     }
 }
+function LoadHistory() {
+    document.querySelector("message-history").innerHTML = "";
+}
+LoadHistory();
