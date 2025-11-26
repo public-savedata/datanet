@@ -1,5 +1,21 @@
 import { readFile, existsSync } from "fs";
+import { join } from "path";
 export class StaticContentHandler {
+    Handle(clientDir) {
+        var url = decodeURIComponent(this.Req.url).split("?")[0];
+        if (url.endsWith("/"))
+            url += "index.html";
+        var Mime = this.GetMimeType(url);
+        if (Mime.length > 0) {
+            this.SendFile(join(clientDir, url));
+            return;
+        }
+        if (this.Res.writableEnded)
+            return;
+        this.Res.writeHead(404, { "Content-Type": "text/plain" });
+        this.Res.write(`Unable to Handle Request`);
+        this.Res.end();
+    }
     Req;
     Res;
     GetMimeType(url) {
@@ -19,7 +35,7 @@ export class StaticContentHandler {
             return "text/html";
         if (url.endsWith(".ico"))
             return "image/x-icon";
-        return "text/plain";
+        return "";
     }
     Redirect(newlink) {
         if (this.Res.writableEnded)
