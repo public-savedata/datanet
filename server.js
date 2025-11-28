@@ -45,7 +45,6 @@ const server = createServer((req, res) => {
             // }
             // Telegram Notification
             new TelegramBot().Notify(message, (data) => {
-                res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
                 res.end(JSON.stringify(data));
             });
         });

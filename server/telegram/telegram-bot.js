@@ -9,7 +9,7 @@ export class TelegramBot {
                 chat_id: this.CHAT_ID,
                 text
             });
-            console.log("✅ پیام ارسال شد:", res.data);
+            //console.log("✅ پیام ارسال شد:", res.data);
             return callback({ result: true, message: "ok" });
         }
         catch (err) {
