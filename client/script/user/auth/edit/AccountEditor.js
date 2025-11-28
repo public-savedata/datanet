@@ -20,7 +20,6 @@ export class AccountEditor {
         //     ev.preventDefault();
         //     this.UpdateAuthentication();
         // }
-        alert("INIT" + JSON.stringify(top.user.auth));
         this.txtUserName.value = top.user.auth.name;
     }
     UpdateAuthentication() {
