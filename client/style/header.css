@@ -1,0 +1,45 @@
+ header {
+     background: #0b3570;
+     color: #b0b0b0;
+     padding: 0;
+     display: flex;
+     align-items: center;
+     gap: 10px;
+ 
+     font-size: 0.8rem;
+
+     * {
+         background-color: #12121212;
+
+     }
+
+     h1 {
+         background-color: darkblue;
+         color: darkblue;
+         width: 24px;
+         height: 24px;
+         overflow: hidden;
+         border-radius: 15px;
+         font-size: 2px;
+         display: flex;
+         align-items: center;
+
+         &::before {
+             content: attr(data-label);
+             color: #efefef;
+             font-size: 14px;
+         }
+     }
+
+     button{
+        color: #efefef;
+        border: none;
+        font-size: smaller;
+        cursor: pointer;
+     }
+     .go-back{
+          width: 24px;
+         height: 24px; overflow: hidden;
+         border-radius: 15px;
+     }
+ }

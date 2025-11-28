@@ -22,7 +22,7 @@ export class MessageElement {
     }
     constructor() {
         this.el = document.createElement("message-element");
-        this._type = "sender";
+        this._type = "self";
     }
     ShowText(message) {
         var p = document.createElement("p");

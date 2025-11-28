@@ -6,52 +6,93 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Data Net</title>
     <link async defer rel="stylesheet" href="./style/index.css">
+    <link async defer rel="stylesheet" href="./style/header.css">
 </head>
 
 <body>
     <header>
-        <h1>DataNet</h1>
+        <button aria-label="goback" class="go-back" id="page-goback">
 
+            <svg xmlns="http://www.w3.org/2000/svg"
+                viewBox="2.0002498626708984 12.000249862670898 43.9997501373291 23.9997501373291">
+                <path fill="#707070"
+                    d="M12.586,35.414C12.977,35.805,13.488,36,14,36s1.023-0.195,1.414-0.586c0.781-0.781,0.781-2.047,0-2.828L8.828,26H44 c1.104,0,2-0.896,2-2s-0.896-2-2-2H8.828l6.586-6.586c0.781-0.781,0.781-2.047,0-2.828c-0.781-0.781-2.047-0.781-2.828,0l-10,10 c-0.781,0.781-0.781,2.047,0,2.828L12.586,35.414z">
+                </path>
+            </svg>
+            </svg>
+        </button>
+        <h1 data-label="DN">
+            DataNet
+        </h1>
+        <div class="auth-box">
+            <span id="AuthenticationDisplayTitle" class="user-auth">xxx-xxx-xxx-xxx</span>
+       
+        </div>
     </header>
 
-    <chat-layout>
-        <chat-container>
-            <!-- جایی برای نمایش نتیجه -->
-            <message-history>
-                <message-element class="type-sender state-success">
-                    <p>Voluptate sint ex enim esse quis.</p>
-                </message-element>
-                <message-element class="type-sender state-indicator">
-                    <p>Voluptate sint ex enim esse quis.</p>
-                </message-element>
-                <message-element class="type-sender state-error">
-                    <p>Voluptate sint ex enim esse quis.</p>
-                </message-element>
-            </message-history>
-            <div id="result" class="result-view"></div>
+    <main>
+
+        <page-screen data-url="home-screen">
+            <canvas id="appCanvas" class="display-screen" width="360" height="360"></canvas>
+        </page-screen>
+
+        <page-screen data-url="chat-screen" style="display: none;">
+            <chat-layout>
+                <chat-container>
+
+
+                    <message-history>
+                        <message-element class="type-sender state-success">
+                            <p>Voluptate sint ex enim esse quis.</p>
+                        </message-element>
+                        <message-element class="type-sender state-indicator">
+                            <p>Voluptate sint ex enim esse quis.</p>
+                        </message-element>
+                        <message-element class="type-sender state-error">
+                            <p>Voluptate sint ex enim esse quis.</p>
+                        </message-element>
+                    </message-history>
+                    <div id="result" class="result-view"></div>
+
+                </chat-container>
+                <chat-card>
+                    <div class="card">
+                        <form id="messageForm">
+                            <canvas-layout>
+                                <input name="sender" type="hidden" value="wayne">
+                                <label>
+                                    <textarea name="message" rows="5" cols="40"
+                                        placeholder="Write Your Message ..."></textarea>
+                                </label>
+                                <button class="btn" type="submit">Send</button>
+                            </canvas-layout>
+                        </form>
+
+                    </div>
+                </chat-card>
+            </chat-layout>
+        </page-screen>
+        <page-screen data-url="about-screen" style="display: none;">
             <footer>
-                <p>Under Construction</p>
+                <pre>Update: <br> You can See Chat History <br> History will be deleted On Next Update ...</pre>
                 <small>© 2026</small>
             </footer>
-        </chat-container>
-        <chat-card>
-            <div class="card">
-                <form id="messageForm">
-                    <canvas-layout>
-                        <label>
+        </page-screen>
 
-                            <textarea name="message" rows="5" cols="40" placeholder="Write Your Message ..."></textarea>
-                        </label>
-                        <button class="btn" type="submit">Send</button>
-                    </canvas-layout>
-                </form>
+        <!-- Account Settings -->
+        <page-screen data-url="account/edit" style="display: none;">
+            <form id="AccountEditor_Form">
+                <label>
+                    <span>name</span>
+                    <input type="text" name="username" id="AccountEditor_UsernameTextBox">
+                </label>
 
-            </div>
-        </chat-card>
-    </chat-layout>
-
-
+                <button id="AccountEditor_SaveButton" class="action-button success">Save</button>
+            </form>
+        </page-screen>
+    </main>
     <script async defer type="module" src="./script/script.js"></script>
+    <script async defer type="module" src="./script/home/home.js"></script>
 
 </body>
 

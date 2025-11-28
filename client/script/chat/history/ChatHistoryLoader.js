@@ -1,6 +1,7 @@
 export class ChatHistoryLoader {
-    LoadChat() {
-        fetch("/api/chat/data").then(f => f.json()).then(g => {
-        });
+    async LoadChat() {
+        var req = await fetch("/api/chat/data/" + top.user.token);
+        var json = await req.json();
+        return json;
     }
 }

@@ -1,9 +1,17 @@
 import { MessageElement } from "./display/MessageElement.js";
 import { ChatHistoryLoader } from "./history/ChatHistoryLoader.js";
 export class ChatBoardClass {
-    LoadHistory() {
+    ScrollToEnd() {
+        this.Container.parentElement.scrollTop = this.Container.clientHeight;
+    }
+    async LoadHistory() {
         this.Container.innerHTML = "";
-        var data = new ChatHistoryLoader().LoadChat();
+        var data = await new ChatHistoryLoader().LoadChat();
+        data.forEach(f => {
+            if (f.type == "text")
+                this.CreateTextMessage(f.from, f.message, "none");
+        });
+        this.ScrollToEnd();
     }
     Container;
     CreateTextMessage(mode, message, initialState) {
