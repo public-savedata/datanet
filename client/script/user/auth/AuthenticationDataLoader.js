@@ -1,12 +1,12 @@
 export class AuthenticationDataLoader {
     Load() {
+        if (!top.user)
+            top.user = {};
         var token = localStorage.getItem("user-auth");
         if (token) {
             top.user.auth = JSON.parse(token);
             return;
         }
-        if (!top.user)
-            top.user = {};
         top.user.auth = { uid: this.generateUID(), name: "user" };
         return;
     }
