@@ -16,6 +16,7 @@ const server = createServer((req, res) => {
     if (req.method === 'GET') {
         // Custom Api
         if (req.url?.startsWith("/api/chat/data/")) {
+            new LocalDataInit().Init(__dirname);
             var sender = req.url.substring("/api/chat/data/".length).split("/")[0];
             new TextResult(res).Json(new LocalDataClass(__dirname).load().DataAsUser(sender));
             return;
@@ -45,6 +46,7 @@ const server = createServer((req, res) => {
             // }
             // Telegram Notification
             new TelegramBot().Notify(message, (data) => {
+                console.log(JSON.stringify(data));
                 res.end(JSON.stringify(data));
             });
         });
