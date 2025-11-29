@@ -1,0 +1,16 @@
+ body {
+     margin: 0;
+     font-family: sans-serif;
+     background: #202022;
+     color: #eef3ff;
+
+
+     >header {
+         height: 5svh;
+     }
+     
+     >main {
+         height: 95svh;
+     }
+
+ }
