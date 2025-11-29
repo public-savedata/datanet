@@ -5,7 +5,7 @@
      display: flex;
      align-items: center;
      gap: 10px;
- 
+
      font-size: 0.8rem;
 
      * {
@@ -31,15 +31,33 @@
          }
      }
 
-     button{
-        color: #efefef;
-        border: none;
-        font-size: smaller;
-        cursor: pointer;
+     button {
+         color: #efefef;
+         border: none;
+         font-size: smaller;
+         cursor: pointer;
      }
-     .go-back{
-          width: 24px;
-         height: 24px; overflow: hidden;
+
+     .go-back {
+         width: 24px;
+         height: 24px;
+         overflow: hidden;
          border-radius: 15px;
+     }
+
+
+     .home{
+        align-self: center;
+        display: flex;
+        align-items: center;
+     }
+
+     .logo {
+         width: 24px;
+         height: 24px;
+     }
+
+     .navigation{
+        display: flex;
      }
  }

@@ -9,9 +9,9 @@ const icons = {
     account: { "data": "M24.021484 4.0800781C18.507484 4.0800781 14.021484 8.5660781 14.021484 14.080078C14.021484 19.594078 18.507484 24.080078 24.021484 24.080078C31.088484 24.080078 39.269281 15.474422 39.613281 15.107422C40.156281 14.530422 40.156281 13.629734 39.613281 13.052734C39.269281 12.685734 31.088484 4.0800781 24.021484 4.0800781 z M41.498047 23C41.224047 23.001 40.946969 23.025172 40.667969 23.076172C39.783969 23.235172 38.939563 23.696156 38.226562 24.410156L36.878906 25.757812L43.242188 32.121094L44.589844 30.773438C45.303844 30.060437 45.764828 29.216031 45.923828 28.332031C45.973828 28.053031 45.997047 27.775953 45.998047 27.501953C46.001047 26.307953 45.540688 25.179313 44.679688 24.320312C43.820687 23.460313 42.692047 22.998 41.498047 23 z M34.757812 27.878906L26.427734 36.208984C26.070734 36.565984 25.807969 37.011141 25.667969 37.494141L24.097656 42.974609C24.025656 43.164609 23.993 43.365406 24 43.566406C24.013 43.929406 24.155594 44.288406 24.433594 44.566406C24.710594 44.843406 25.067688 44.986 25.429688 45C25.630688 45.007 25.834391 44.975344 26.025391 44.902344L31.505859 43.332031C31.988859 43.192031 32.431062 42.930266 32.789062 42.572266L41.121094 34.242188L34.757812 27.878906 z M12.5 28C10.019 28 8 30.019 8 32.5L8 33.699219C8 39.045219 14.025109 43.312922 22.037109 43.919922C22.026109 43.825922 22.005953 43.733672 22.001953 43.638672C21.986953 43.197672 22.051359 42.769375 22.193359 42.359375L23.742188 36.943359C23.978188 36.130359 24.416719 35.388922 25.011719 34.794922L31.806641 28L12.5 28 z" },
     about: { "data": "M24,4C12.972,4,4,12.972,4,24c0,3.186,0.77,6.343,2.232,9.172l-2.139,7.657c-0.242,0.867,0.003,1.802,0.64,2.439c0.475,0.475,1.115,0.732,1.771,0.732c0.224,0,0.449-0.03,0.67-0.092l7.661-2.139C17.662,43.23,20.817,44,24,44c11.028,0,20-8.972,20-20S35.028,4,24,4z M22.5,14.5c0-0.828,0.671-1.5,1.5-1.5s1.5,0.672,1.5,1.5v12c0,0.828-0.671,1.5-1.5,1.5s-1.5-0.672-1.5-1.5V14.5z M24,35c-1.105,0-2-0.895-2-2c0-1.105,0.895-2,2-2s2,0.895,2,2C26,34.105,25.105,35,24,35z" },
 };
-const items = [
+const Data = [
     { icon: icons.chat.data, text: "Message", theme: ["#1A3177", "#2C51BE", "#829AE3"], command: "nav:chat-screen" },
-    { icon: icons.account.data, text: "Account", theme: ["#510869", "#820DAF", "#B86EDA"], command: "nav:account/edit" },
+    { icon: icons.account.data, text: "Profile", theme: ["#510869", "#820DAF", "#B86EDA"], command: "nav:account/edit" },
     { icon: icons.about.data, text: "About", theme: ["#363636", "#707070", "#a0a0a0"], command: "nav:about-screen" },
 ];
 function drawGrid(progress) {
@@ -47,30 +47,57 @@ function drawGrid(progress) {
         }
     }
 }
+let Items = [];
+class DashCommandRuntime {
+    IsSelected;
+    constructor() {
+        this.IsSelected = false;
+    }
+}
+class VmDashboardButton {
+    Item;
+    Runtime;
+    constructor(item) {
+        this.Item = item;
+        this.Runtime = new DashCommandRuntime();
+    }
+}
+Items = Data.map(t => new VmDashboardButton(t));
 function drawItems() {
     ctx.fillStyle = "#333";
-    ctx.font = "10px Arial";
+    ctx.font = "12px Arial";
     ctx.textAlign = "center";
-    items.forEach((item, index) => {
+    var d = "M109.37,69.63,69.63,109.37a8,8,0,0,1-11.26,0L18.63,69.63a8,8,0,0,1,0-11.26L58.37,18.63a8,8,0,0,1,11.26,0l39.74,39.74A8,8,0,0,1,109.37,69.63Z";
+    Items.forEach((v, index) => {
+        ctx.shadowBlur = 0;
         const row = Math.floor(index / 3);
         const col = index % 3;
         const x = col * cellSize + cellSize / 2;
         const y = row * cellSize + cellSize / 2;
         // رسم SVG به صورت Path
-        const path = new Path2D(item.icon);
+        const Back = new Path2D(d);
+        const path = new Path2D(v.Item.icon);
         ctx.save();
-        ctx.translate(x - 20, y - 40);
-        ctx.strokeStyle = item.theme[1];
-        ctx.fillStyle = item.theme[2];
-        ctx.shadowColor = item.theme[0];
+        ctx.translate(x - 65, y - 70);
+        ctx.fillText(index.toString(), 10, 0);
+        ctx.stroke(Back);
+        if (v.Runtime.IsSelected)
+            ctx.fill(Back);
+        ctx.restore();
+        ctx.save();
+        ctx.translate(x - 18, y - 35);
+        ctx.strokeStyle = v.Item.theme[1];
+        ctx.fillStyle = v.Item.theme[2];
+        ctx.shadowColor = v.Item.theme[0];
         ctx.shadowBlur = 10;
+        ctx.scale(0.7, 0.7);
         ctx.stroke(path);
+        ctx.shadowBlur = 0;
         ctx.fill(path);
         ctx.restore();
-        ctx.shadowBlur = 0;
-        ctx.fillStyle = item.theme[2];
+        ctx.fillStyle = v.Item.theme[2];
         // متن زیر آیکن
-        ctx.fillText(item.text, x, y + 25);
+        ctx.fillText(v.Item.text, x, y + 15);
     });
 }
 let skip = false;
@@ -100,12 +127,17 @@ function handleClick(evt) {
     const col = Math.floor(x / cellSize);
     const row = Math.floor(y / cellSize);
     const index = row * 3 + col;
-    if (items[index]) {
-        const command = items[index].command;
+    if (Items[index]) {
+        var trg = Items[index];
+        const command = trg.Item.command;
+        trg.Runtime.IsSelected = true;
         console.log("Executing:", command);
         // اینجا می‌تونی دستور واقعی رو صدا بزنی
         // مثلا: navigateTo(command) یا dispatch(command)
-        transitionOut(() => { RunCommand(command); });
+        drawItems();
+        setTimeout(() => {
+            transitionOut(() => { RunCommand(command); });
+        }, 500);
     }
 }
 canvas.addEventListener("mousedown", handleClick);
@@ -130,37 +162,35 @@ function RunCommand(command) {
         }
     }
 }
-function transitionToPage(newPage) {
-    let alpha = 1;
-    function fadeOut() {
-        ctx.globalAlpha = alpha;
-        drawCurrentPage(); // صفحه فعلی
-        alpha -= 0.05;
-        if (alpha > 0) {
-            requestAnimationFrame(fadeOut);
-        }
-        else {
-            currentPage = newPage;
-            fadeIn();
-        }
-    }
-    function fadeIn() {
-        alpha = 0;
-        function step() {
-            ctx.globalAlpha = alpha;
-            drawPage(currentPage); // صفحه جدید
-            alpha += 0.05;
-            if (alpha < 1) {
-                requestAnimationFrame(step);
-            }
-            else {
-                ctx.globalAlpha = 1;
-            }
-        }
-        step();
-    }
-    fadeOut();
-}
+// function transitionToPage(newPage: any) {
+//     let alpha = 1;
+//     function fadeOut() {
+//         ctx.globalAlpha = alpha;
+//         drawCurrentPage(); // صفحه فعلی
+//         alpha -= 0.05;
+//         if (alpha > 0) {
+//             requestAnimationFrame(fadeOut);
+//         } else {
+//             currentPage = newPage;
+//             fadeIn();
+//         }
+//     }
+//     function fadeIn() {
+//         alpha = 0;
+//         function step() {
+//             ctx.globalAlpha = alpha;
+//             drawPage(currentPage); // صفحه جدید
+//             alpha += 0.05;
+//             if (alpha < 1) {
+//                 requestAnimationFrame(step);
+//             } else {
+//                 ctx.globalAlpha = 1;
+//             }
+//         }
+//         step();
+//     }
+//     fadeOut();
+// }
 function transitionOut(callback) {
     // 1. ذخیره تصویر فعلی Canvas
     const image = new Image();

@@ -23,7 +23,6 @@ p {
 
 
 main {
-    padding: 20px;
     display: flex;
     flex-direction: column;
 }
@@ -235,4 +234,33 @@ chat-card {
 chat-container {
     padding-bottom: 150px;
     overflow-y: auto;
+}
+
+
+body {
+   
+    background-repeat: no-repeat;
+    background-image: url('data:image/svg+xml;utf8,<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1125 2436"><defs><style>.cls-1{fill:none;stroke:%230037a5;stroke-width:3px;opacity:0.5;}.cls-1,.cls-3{stroke-miterlimit:10;opacity:0.5;}.cls-2{fill:%230037a5;opacity:0.5;}.cls-3{stroke:%23000;opacity:0.5;}.cls-4{font-size:60px;font-family:MyriadPro-Regular, Myriad Pro;letter-spacing:-0.03em;}.cls-5{letter-spacing:-0.01em;}.cls-6{letter-spacing:0em;}</style></defs><polyline class="cls-1" points="70.5 57.5 70.5 1171.41 162.04 1262.96 162.04 2319.69"/><line class="cls-1" x1="101.93" y1="0.5" x2="101.93" y2="716.24"/><polygon class="cls-2" points="145 2409 125 2409 125 1693.26 145 1708.26 145 2409"/></svg>');
+
+  
+
+}
+
+
+.abstract-theme{
+    border: 1px solid #1677ff; margin: 20px; border-radius: 10px;
+    min-height: 50vh;
+    background-image: linear-gradient(#1677ff00,#1677ff33);
+}
+
+.pd-20px{
+    padding: 20px;
+}
+
+.action-box {
+    margin: 10px;
+    display: flex;
+    gap: 10px;
+    justify-items: flex-end;
+    justify-content: flex-end;
 }
