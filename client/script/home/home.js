@@ -99,6 +99,7 @@ function drawItems() {
         // متن زیر آیکن
         ctx.fillText(v.Item.text, x, y + 15);
     });
+    Items.forEach(t => t.Runtime.IsSelected = false);
 }
 let skip = false;
 function animate() {
